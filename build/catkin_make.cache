@@ -1,2 +1,0 @@
-display_node
--DCATKIN_DEVEL_PREFIX=/home/sjf/source/perch_ws/devel -DCMAKE_INSTALL_PREFIX=/home/sjf/source/perch_ws/install -G Unix Makefiles
