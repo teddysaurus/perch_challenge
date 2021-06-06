@@ -1,0 +1,8 @@
+prefix=/home/sjf/source/perch_ws/devel
+
+Name: display_node
+Description: Description of display_node
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
