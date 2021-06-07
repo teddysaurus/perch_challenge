@@ -7,3 +7,5 @@ WORKDIR /perch_ws
 RUN git clone https://github.com/teddysaurus/perch_challenge.git
 
 RUN /bin/bash -c 'cd perch_challenge && source /opt/ros/melodic/setup.bash && catkin_make'
+
+WORKDIR /perch_ws/perch_challenge
