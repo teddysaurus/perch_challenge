@@ -1,0 +1,5 @@
+*.git
+devel
+build
+.vscode
+*~

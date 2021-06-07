@@ -10,7 +10,6 @@ void perchClockCallback(const std_msgs::Int64::ConstPtr& msg);
 
 int64_t g_fake_clock;
 int g_selected_product = 0;
-// Note, review, video etc, have the same index as the array in ros_redis.py
 
 typedef enum states {
   waiting = 0,
@@ -32,7 +31,8 @@ int main(int argc, char **argv)
 
   
   State state = waiting;
-  
+  int active_product = 0; // this is the product we are displaying info for
+
   int count = 0;
   while (ros::ok())
   {
@@ -49,22 +49,27 @@ int main(int argc, char **argv)
       /* show the product menu */
       if(g_selected_product == 0)
       {
+        active_product = 0;
         state = waiting;
+        break;
+      }
+      active_product = g_selected_product;
+
+      if(!(rand() % 5))
+      {
+        ss << "PRODUCT" << active_product << "/" << "video";
+        state = video;
         break;
       }
       if(!(rand() % 5))
       {
-        ss << "PRODUCT" << g_selected_product << "/" << "video";
-        state = video;
+        ss << "PRODUCT" << active_product << "/" << "review";
+        state = review;  
+        break; 
       }
       if(!(rand() % 5))
       {
-        ss << "PRODUCT" << g_selected_product << "/" << "review";
-        state = review;   
-      }
-      if(!(rand() % 5))
-      {
-        ss << "PRODUCT" << g_selected_product << "/" << "accessories";
+        ss << "PRODUCT" << active_product << "/" << "accessories";
         state = accessories;   
       }
       break;
@@ -73,7 +78,7 @@ int main(int argc, char **argv)
       
       if(!(rand() % 5))
       {
-        ss << "PRODUCT" << g_selected_product << "/" << "close";
+        ss << "PRODUCT" << active_product << "/" << "close";
         state = closed;
       }
       break;
@@ -82,7 +87,7 @@ int main(int argc, char **argv)
       
       if (!(rand() % 5))
       {
-        ss << "PRODUCT" << g_selected_product << "/" << "close";
+        ss << "PRODUCT" << active_product << "/" << "close";
         state = closed;
       }
      break;
@@ -90,8 +95,9 @@ int main(int argc, char **argv)
       /* show accessories */
       if((rand() % 50))
         break; 
-      ss << "PRODUCT" << g_selected_product << "/" << "close";
+      ss << "PRODUCT" << active_product << "/" << "close";
       state = closed;
+      break;
     case closed:
       state = waiting;
       break;
@@ -118,15 +124,15 @@ int main(int argc, char **argv)
 
 void perchProductCallback(const std_msgs::String::ConstPtr& msg)
 {
-  ROS_INFO("[%Ld] I heard: [%s] ", g_fake_clock, msg->data.c_str());
+  //ROS_INFO("[%Ld] I heard: [%s] ", g_fake_clock, msg->data.c_str());
   char product[] = "PRODUCT";
   std::string action = msg->data.substr(msg->data.find("/"));
-  ROS_INFO("%s", action.c_str());
+  //ROS_INFO("%s", action.c_str());
   if(action == "/up")
     g_selected_product = std::stoi(msg->data.substr(strlen(product), 1));
   else
     g_selected_product = 0;
-  ROS_INFO("[%Ld] I heard: [%s] (%s, %d)", g_fake_clock, msg->data.c_str(), action.c_str(), g_selected_product);
+  //ROS_INFO("[%Ld] I heard: [%s] (%s, %d)", g_fake_clock, msg->data.c_str(), action.c_str(), g_selected_product);
 }
 
 void perchClockCallback(const std_msgs::Int64::ConstPtr& msg)

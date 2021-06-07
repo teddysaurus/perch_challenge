@@ -1,0 +1,6 @@
+<launch>
+	<node name="ros_redis" pkg="display_node" type="ros_redis.py" output="screen"></node>
+	<node name="product_node" pkg="display_node" type="product_node" output="screen"></node>
+	<node name="display_node" pkg="display_node" type="display_node" output="screen"></node>
+</launch>
+	
