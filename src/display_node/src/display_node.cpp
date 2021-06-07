@@ -132,7 +132,6 @@ void perchProductCallback(const std_msgs::String::ConstPtr& msg)
     g_selected_product = std::stoi(msg->data.substr(strlen(product), 1));
   else
     g_selected_product = 0;
-  //ROS_INFO("[%Ld] I heard: [%s] (%s, %d)", g_fake_clock, msg->data.c_str(), action.c_str(), g_selected_product);
 }
 
 void perchClockCallback(const std_msgs::Int64::ConstPtr& msg)

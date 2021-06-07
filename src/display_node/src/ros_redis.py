@@ -28,7 +28,7 @@ rts = Client()
 for i in range(1,5):
     try:
         rts.create(vendor + 'PRODUCT' + str(i))
-       # print vendor + 'PRODUCT' + str(i)
+        # print vendor + 'PRODUCT' + str(i)
         break
     except:
         pass

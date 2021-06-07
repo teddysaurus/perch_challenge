@@ -4,24 +4,17 @@
 
 #include <sstream>
 
-//void perchProductCallback(const std_msgs::String::ConstPtr& msg);
-
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "perch_product");
   ros::NodeHandle n;
   ros::Publisher product_pub = n.advertise<std_msgs::String>("perch_product", 1000);
   ros::Publisher perch_clock_pub = n.advertise<std_msgs::Int64>("perch_clock", 1);
-//  ros::Subscriber        sub = n.subscribe("perch_product", 1000, perchProductCallback);
-  ros::Rate loop_rate(60); // Speed up time by 60.
+  ros::Rate loop_rate(60); // Speed up time by 60 - change this to go faster or slower.
   std_msgs::Int64 fake_clock;
   
   time_t  t = time(0);
   fake_clock.data = t;
-  /**
-   * A count of how many messages we have sent. This is used to create
-   * a unique string for each message.
-   */
 
   srand((unsigned) t);
 
@@ -72,8 +65,3 @@ int main(int argc, char **argv)
 
   return 0;
 }
-
-/*void perchProductCallback(const std_msgs::String::ConstPtr& msg)
-{
-  ROS_INFO("I heard: [%s]", msg->data.c_str());
-}*/
